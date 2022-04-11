@@ -11166,11 +11166,22 @@ var _rxjs = require("rxjs");
 // OBSERVABLE
 var observable = new _rxjs.Observable(function (subscriber) {
   subscriber.next('Hello world');
+  subscriber.error('Error!');
+  subscriber.next('test'); // Terminate the process-observable
+
+  subscriber.complete();
+  subscriber.next();
 }); // OBSERVER-observer usually take a next function
 
 observable.subscribe({
   next: function next(value) {
     console.log(value);
+  },
+  complete: function complete() {
+    console.log('complete called!');
+  },
+  error: function error(err) {
+    console.error(err);
   }
 });
 },{"rxjs":"../node_modules/rxjs/dist/esm5/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -11201,7 +11212,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50416" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53260" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
