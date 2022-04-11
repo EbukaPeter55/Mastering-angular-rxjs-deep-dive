@@ -11165,13 +11165,16 @@ var _rxjs = require("rxjs");
 
 // OBSERVABLE
 var observable = new _rxjs.Observable(function (subscriber) {
-  subscriber.next('Hello world');
-  subscriber.error('Error!');
-  subscriber.next('test'); // Terminate the process-observable
+  var id = setInterval(function () {
+    subscriber.next('test');
+  }, 1000);
+  subscriber.complete(); // Stop memory leak
 
-  subscriber.complete();
-  subscriber.next();
-}); // OBSERVER-observer usually take a next function
+  return function () {
+    clearInterval(id);
+  };
+});
+console.log("before"); // OBSERVER-observer usually take a next function
 
 observable.subscribe({
   next: function next(value) {

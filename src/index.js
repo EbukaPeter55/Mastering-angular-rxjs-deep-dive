@@ -2,15 +2,17 @@ import { Observable } from "rxjs";
 
 // OBSERVABLE
 const observable = new Observable((subscriber)=>{
-    subscriber.next('Hello world')
-    subscriber.error('Error!')
-    subscriber.next('test')
-
-    // Terminate the process-observable
+    const id = setInterval(()=> {
+        subscriber.next('test')
+    }, 1000)
     subscriber.complete()
-    subscriber.next()
-})
 
+    // Stop memory leak
+    return () => {
+        clearInterval(id)
+    }
+})
+console.log("before");
 // OBSERVER-observer usually take a next function
 observable.subscribe({
     next: (value) => {
